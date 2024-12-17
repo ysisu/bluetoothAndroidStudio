@@ -76,11 +76,11 @@ public class MainActivity extends AppCompatActivity {
         Button buttonRight = findViewById(R.id.buttoRight);
         Button buttonCenter = findViewById(R.id.buttoCenter);
 
-        buttonUp.setOnClickListener(v -> sendData("1"));
-        buttonDown.setOnClickListener(v -> sendData("2"));
-        buttonLeft.setOnClickListener(v -> sendData("3"));
-        buttonRight.setOnClickListener(v -> sendData("4"));
-        buttonCenter.setOnClickListener(v -> sendData("5"));
+        buttonUp.setOnClickListener(v -> sendData("0000004#"));
+        buttonDown.setOnClickListener(v -> sendData("0000002#"));
+        buttonLeft.setOnClickListener(v -> sendData("0000003#"));
+        buttonRight.setOnClickListener(v -> sendData("0000001#"));
+        buttonCenter.setOnClickListener(v -> sendData("0000005#"));
 
         // Solicitar permisos y conectar al dispositivo
         if (hasBluetoothPermissions()) {
