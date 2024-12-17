@@ -78,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
 
         buttonUp.setOnClickListener(v -> sendData("0000004#"));
         buttonDown.setOnClickListener(v -> sendData("0000002#"));
-        buttonLeft.setOnClickListener(v -> sendData("0000003#"));
-        buttonRight.setOnClickListener(v -> sendData("0000001#"));
+        buttonLeft.setOnClickListener(v -> sendData("0000001#"));
+        buttonRight.setOnClickListener(v -> sendData("0000003#"));
         buttonCenter.setOnClickListener(v -> sendData("0000005#"));
 
         // Solicitar permisos y conectar al dispositivo
