@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
@@ -117,7 +118,6 @@ public class BluetoothHelper {
         if (bluetoothSocket != null && bluetoothSocket.isConnected()) {
             try {
                 outputStream.write(data.getBytes());
-                Toast.makeText(context, "Enviado: " + data, Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 Toast.makeText(context, "Error al enviar datos", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
@@ -125,6 +125,13 @@ public class BluetoothHelper {
         } else {
             Toast.makeText(context, "No hay conexión Bluetooth activa", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public InputStream getInputStream() throws IOException {
+        if (bluetoothSocket == null || !bluetoothSocket.isConnected()) {
+            throw new IOException("El socket Bluetooth no está conectado.");
+        }
+        return bluetoothSocket.getInputStream();
     }
 
     public void closeConnection() {
