@@ -3,7 +3,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,6 +23,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -30,7 +33,7 @@ public class PhotoActivity extends AppCompatActivity {
     private BluetoothHelper bluetoothHelper;
     private EditText etDeviceAddress;
     private TextView photoAnalysis;
-
+    private TextToSpeech tts;
     private Button btnConnect;
     private Button btnTakePhoto;
     private Button btnAnalysePhoto;
@@ -44,6 +47,20 @@ public class PhotoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo);
+
+        // Inicio TTS
+        tts = new TextToSpeech(this, status -> {
+            if (status == TextToSpeech.SUCCESS) {
+                // Configura el idioma
+                int result = tts.setLanguage(Locale.US);
+
+                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    Toast.makeText(this, "Idioma no soportado", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(this, "Inicialización fallida", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         etDeviceAddress = findViewById(R.id.etDeviceAddress);
         btnConnect = findViewById(R.id.btnConnect);
@@ -186,6 +203,10 @@ public class PhotoActivity extends AppCompatActivity {
                         // Puedes mostrar las etiquetas o hacer lo que necesites con ellas
                         String topTags = imaggaHandler.extractTopTags(tagsResult);
                         photoAnalysis.setText(topTags);
+                        // Añadimos funcionalidad de que lo BUFE por el altavoz
+                        speakText(topTags);
+
+
                     });
                 } else {
                     // Si no se encuentra el upload_id, manejar el error
@@ -200,17 +221,29 @@ public class PhotoActivity extends AppCompatActivity {
 
     }
 
+    private void speakText(String text) {
+        // Bundle para opciones adicionales
+        Bundle params = new Bundle();
+        params.putFloat(TextToSpeech.Engine.KEY_PARAM_VOLUME, 1.0f); // Ajustar el volumen
+
+        // Usar el método actualizado speak()
+        tts.speak(text, TextToSpeech.QUEUE_FLUSH, params, "TTS1");
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         bluetoothHelper.handlePermissionsResult(requestCode, permissions, grantResults);
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         bluetoothHelper.closeConnection();
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
     }
 
 }
