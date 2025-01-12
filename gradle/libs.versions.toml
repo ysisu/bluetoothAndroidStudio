@@ -1,6 +1,14 @@
 [versions]
 agp = "8.7.2"
+commonsCodec = "1.17.0"
+commonsIo = "2.13.0"
+googleApiClient = "2.7.0"
+googleApiClientAndroid = "1.22.0"
+googleApiServicesVision = "v1-rev20241115-2.0.0"
+googleApiServicesVisionVersion = "v1-rev20230120-2.0.0"
+googleGoogleApiServicesVision = "v1-rev357-1.22.0"
 gson = "2.10.1"
+jsr305 = "3.0.2"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -11,7 +19,15 @@ constraintlayout = "2.2.0"
 okhttp = "4.12.0"
 
 [libraries]
+commons-codec = { module = "commons-codec:commons-codec", version.ref = "commonsCodec" }
+commons-io = { module = "commons-io:commons-io", version.ref = "commonsIo" }
+google-api-client = { module = "com.google.api-client:google-api-client", version.ref = "googleApiClient" }
+google-api-client-android = { module = "com.google.api-client:google-api-client-android", version.ref = "googleApiClientAndroid" }
+google-api-services-vision = { module = "com.google.apis:google-api-services-vision", version.ref = "googleApiServicesVision" }
+google-api-services-vision-vv1rev20230120200 = { module = "com.google.apis:google-api-services-vision", version.ref = "googleApiServicesVisionVersion" }
+google-api-services-vision-vv1rev3571220 = { module = "com.google.apis:google-api-services-vision", version.ref = "googleGoogleApiServicesVision" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+jsr305 = { module = "com.google.code.findbugs:jsr305", version.ref = "jsr305" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

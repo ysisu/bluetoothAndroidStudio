@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button btnControls = findViewById(R.id.btnControls);
-        Button btnTakePhoto = findViewById(R.id.btnTakePhoto);
+        Button btnTakePhoto = findViewById(R.id.btnAnalysePhoto);
 
         // Abrir la actividad de controles
         btnControls.setOnClickListener(v -> {
